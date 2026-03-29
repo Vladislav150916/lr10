@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animals>
+    <animal>
+        <name>Барсик</name>
+        <type>Кот</type>
+        <age>8</age>
+    </animal>
+    <animal>
+        <name>Мухтар</name>
+        <type>Собака</type>
+        <age>5</age>
+    </animal>
+    <animal>
+        <name>Коготь</name>
+        <type>Кот</type>
+        <age>19</age>
+    </animal>
+    <animal>
+        <name>Пират</name>
+        <type>Змея</type>
+        <age>34</age>
+    </animal>
+    <animal>
+        <name>Барс</name>
+        <type>Кот</type>
+        <age>16</age>
+    </animal>
+    <animal>
+        <name>Джек</name>
+        <type>Собака</type>
+        <age>9</age>
+    </animal>
+    <animal>
+        <name>Сырник</name>
+        <type>Мышь</type>
+        <age>1</age>
+    </animal>
+    <animal>
+        <name>Батон</name>
+        <type>Собака</type>
+        <age>13</age>
+    </animal>
+</animals>
