@@ -3,6 +3,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Example3 {
@@ -33,13 +34,13 @@ public class Example3 {
                 in.nextLine();
                 switch (option){
                     case 1:
-                        addAnimal(doc, in);
+                        addAnimal(jsonObject, in);
                         break;
                     case 2:
-                        findAnimal(doc, in);
+                        findAnimal(jsonObject, in);
                         break;
                     case 3:
-                        deleteAnimal(doc, in);
+                        deleteAnimal(jsonObject, in);
                         break;
                     case 0:
                         System.out.println("Завершение программы");
@@ -49,20 +50,37 @@ public class Example3 {
 
                 }
             }
+
+            FileWriter file = new FileWriter("src/main/java/AnimalsJSON.json");
+            file.write(jsonObject.toJSONString());
+            file.close();
+            System.out.println("JSON файл сохранен");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void addAnimal(){
+    public static void addAnimal(JSONObject jsonObject, Scanner in){
+        JSONObject newAnimal = new JSONObject();
+        System.out.println("Введите кличку животного");
+        String name = in.nextLine();
+        newAnimal.put("name", name);
+        System.out.println("Введите тип животного");
+        String type = in.nextLine();
+        newAnimal.put("type", type);
+        System.out.println("Введите возраст животного");
+        String age = in.nextLine();
+        newAnimal.put("age", age);
+
+        JSONArray jArr = (JSONArray) jsonObject.get("animals");
+        jArr.add(newAnimal);
+    }
+
+    public static void findAnimal(JSONObject jobj, Scanner in){
 
     }
 
-    public static void findAnimal(){
-
-    }
-
-    public static void deleteAnimal(){
+    public static void deleteAnimal(JSONObject jobj, Scanner in){
 
     }
 }
