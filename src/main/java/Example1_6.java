@@ -3,24 +3,22 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Example1_6 {
     public static void main(String[] args) {
         String mainUrl = "https://urfu.ru/ru/news/";
         try {
-            // 1. Загружаем главную страницу, чтобы получить параметры
             Document mainPage = Jsoup.connect(mainUrl)
                     .userAgent("Mozilla/5.0")
                     .get();
 
-            // 2. Находим контейнер с data-атрибутами
+            //Из-за динамической подгрузки новостей, нужно будет сформировать запрос к источнику новостей
             Element newsContainer = mainPage.selectFirst(".news-container");
             if (newsContainer == null) {
                 System.out.println("Не найден контейнер новостей на главной странице.");
                 return;
             }
-
-            // 3. Извлекаем параметры. Из-за динамической подгрузки новостей, нужно будет сформировать запрос к источнику новостей
             String apiUrl = newsContainer.attr("data-url"); // /get-news/ru/news/
             String rows = newsContainer.attr("data-rows");
             String cols = newsContainer.attr("data-cols");
@@ -32,7 +30,7 @@ public class Example1_6 {
             String page = newsContainer.attr("data-page");
             String showCategories = newsContainer.attr("data-show-categories");
 
-            // 4. Формируем полный URL для API
+            //URL для получения новостей
             String apiFullUrl = "https://urfu.ru" + apiUrl + "?" +
                     "rows=" + rows +
                     "&cols=" + cols +
@@ -46,25 +44,22 @@ public class Example1_6 {
 
             System.out.println("Запрашиваем API: " + apiFullUrl);
 
-            // 5. Загружаем фрагмент с новостями
+            //Загрузка и парсинг новостей
             Document newsFragment = Jsoup.connect(apiFullUrl)
                     .userAgent("Mozilla/5.0")
                     .get();
 
-            // 6. Парсим новости из фрагмента
             Elements newsBlocks = newsFragment.select(".col.news-item.widget-news");
             if (newsBlocks.isEmpty()) {
-                System.out.println("Новостей не найдено в ответе API.");
+                System.out.println("Новостей не найдено");
                 return;
             }
 
             System.out.println("Найдено новостей: " + newsBlocks.size() + "\n");
             for (Element block : newsBlocks) {
-                // Дата
                 Element dateElement = block.selectFirst(".date");
                 String date = dateElement != null ? dateElement.text() : "Дата не указана";
 
-                // Заголовок (ссылка внутри .snippet)
                 Element titleLink = block.selectFirst(".snippet a");
                 String title = titleLink != null ? titleLink.text() : "Заголовок не найден";
 

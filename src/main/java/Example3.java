@@ -4,7 +4,11 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Example3 {
     public static void main(String[] args) {
@@ -77,10 +81,42 @@ public class Example3 {
     }
 
     public static void findAnimal(JSONObject jobj, Scanner in){
+        System.out.println("Введите тип животного для поиска");
+        String type = in.nextLine();
+        JSONArray jArr = (JSONArray) jobj.get("animals");
+        List<JSONObject> array = new ArrayList<>();
+        for (Object o : jArr){
+            array.add((JSONObject) o);
+        }
 
+        array = array.stream()
+                .filter(animal -> {
+                    String str = animal.get("type").toString();
+                    return str.equalsIgnoreCase(type);
+                })
+                .collect(Collectors.toList());
+        if (array.isEmpty()) {
+            System.out.println("Животные не найдены");
+        } else {
+            array.forEach(animal -> {
+                System.out.println("\nКличка: " + animal.get("name"));
+                System.out.println("Возраст: " + animal.get("age"));
+            });
+        }
     }
 
     public static void deleteAnimal(JSONObject jobj, Scanner in){
-
+        System.out.println("Введите имя удаляемого животного");
+        String del = in.nextLine();
+        JSONArray jArr = (JSONArray) jobj.get("animals");
+        Iterator iterator = jArr.iterator();
+        while (iterator.hasNext()){
+            JSONObject jo = (JSONObject) iterator.next();
+            String name = jo.get("name").toString();
+            if (del.equalsIgnoreCase(name)){
+                iterator.remove();
+                System.out.println(name + " удален");
+            }
+        }
     }
 }
