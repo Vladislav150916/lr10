@@ -38,8 +38,6 @@ public class timus_2002 {
         }
         in.close();
 
-
-
     }
 
     public static void register(Map<String, String> map, String name, String pass){
