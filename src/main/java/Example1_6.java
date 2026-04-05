@@ -19,7 +19,8 @@ public class Example1_6 {
                 System.out.println("Не найден контейнер новостей на главной странице.");
                 return;
             }
-            String apiUrl = newsContainer.attr("data-url"); // /get-news/ru/news/
+            //Тут получаем параметры запроса из первого ответа
+            String Url = newsContainer.attr("data-url");
             String rows = newsContainer.attr("data-rows");
             String cols = newsContainer.attr("data-cols");
             String categories = newsContainer.attr("data-categories");
@@ -31,7 +32,7 @@ public class Example1_6 {
             String showCategories = newsContainer.attr("data-show-categories");
 
             //URL для получения новостей
-            String apiFullUrl = "https://urfu.ru" + apiUrl + "?" +
+            String targetUrl = "https://urfu.ru" + Url + "?" +
                     "rows=" + rows +
                     "&cols=" + cols +
                     "&categories=" + categories +
@@ -42,10 +43,8 @@ public class Example1_6 {
                     "&page=" + page +
                     "&show-categories=" + showCategories;
 
-            System.out.println("Запрашиваем API: " + apiFullUrl);
-
             //Загрузка и парсинг новостей
-            Document newsFragment = Jsoup.connect(apiFullUrl)
+            Document newsFragment = Jsoup.connect(targetUrl)
                     .userAgent("Mozilla/5.0")
                     .get();
 
