@@ -16,7 +16,10 @@ public class Example5 {
 
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
-            XSSFSheet sheet = workbook.getSheet("Товарыы");
+            XSSFSheet sheet = workbook.getSheet("Товары");
+            //Для проверки обработки ошибки некорректного названия листа:
+            //sheet = workbook.getSheet("Товарыыыыыыыы");
+
             if (sheet == null) {
                 throw new NullPointerException();
             }
@@ -33,7 +36,7 @@ public class Example5 {
         } catch (FileNotFoundException fnfe) {
             System.out.println("Файл не найден, проверьте указанный путь к файлу, а также наличие файла");
         } catch (IOException ioe) {
-            System.out.println("IO ошибка, проверьте ");
+            System.out.println("IO ошибка, проверьте корректность написания кода");
         }
     }
 }
